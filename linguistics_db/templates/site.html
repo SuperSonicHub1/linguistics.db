@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if query %}Query results for "{{ query }}"{% else %}Index{% endif %}
+{% endblock %}
+
+{% block main %}
+<form action="/search" method="get">
+	<label>
+		Query: <input type="text" id="query" name="query" {{ dict(value=query) | xmlattr }}>
+	</label>
+	<button type="submit">Sumbit</button>
+</form>
+<p>Examples</p>
+<ul>
+	<li>
+		Basic word search (will be improved soon): <pre>spelling:like:video</pre>
+	</li>
+	<li>
+		Longest word with one syllable: <pre>syllables:length:1 order:desc:spelling:length</pre>
+	</li>
+	<li>
+		Words that rhyme with "rhymes": <pre>pronunciation:endswith:"aɪmz"</pre> 
+	</li>
+	<li>
+		Words with greater than or equal to 2 and less than 10 characters: <pre>spelling:length:[2, 10)</pre>
+	</li>
+	<li>
+		Find short words with many syllables: <pre>order:asc:spelling:length order:desc:syllables:length</pre>
+	</li>
+
+</ul>
+<hr>
+{% if results %}
+<p>{{ results | length }} results (cap of 100)</p>
+{% for result in results %}
+<article>
+	<h2>{{result.spelling}}</h2>
+	<h3 class="IPA">/{{result.pronunciation}}/</h3>
+	<p>{{ result.syllables_length }} syllables, {{ result.spelling_length }} characters</p>
+</article>
+<hr>
+{% endfor %}
+{% endif %}
+{% endblock %}
+

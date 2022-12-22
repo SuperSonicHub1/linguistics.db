@@ -1,0 +1,51 @@
+# Most basic search
+apple
+
+# A bit more complex
+video game
+
+# A word with the syllable /saɪ/
+# "syllables" is an array, so we use `contains`
+syllables:contains:/saI/
+
+# A word that starts with the syllable /saI/
+syllables:startswith:/saI/
+
+# A word that ends with the syllable /aɪmz/
+syllables:endswith:/aɪmz/
+
+# A word that ends in /iːd/
+pronunciation:endswith:/iːd/
+
+# Find phonic phrases
+# ("pronunciation" is a string, so we use `like`)
+pronunciation:like:" "
+
+# Words with two syllables
+syllables:length:2
+
+# Words with greater than or equal to 2 and less than 10 characters
+spelling:length:[2, 10)
+
+# Find words with stressed syllables with variables (<primary-stress> -> ˈ, <secondary-stress> -> ˌ)
+pronunciation:like:<primary-stress> OR pronunciation:like:<secondary-stress>
+
+# https://en.wiktionary.org/wiki/Appendix:Unicode/IPA_Extensions
+# Other variables:
+# <long> -> ː
+# <half-long> -> ˑ
+# <space> -> " "
+# non-ASCII IPA letters like: <schwa> -> ə
+# any advice on how to implement diacritics?
+
+# They can be used in IPA transcriptions as well
+pronunciation:endswith:/i<long>d/
+
+# Terms relating to video that are only one word
+video NOT pronunciation:like:" "
+
+# Find the longest word with one syllable
+syllables:length:1 order:desc:spelling:length
+
+# Find the shortest word while maximizing syllable length
+order:asc:spelling:length order:desc:syllables:length

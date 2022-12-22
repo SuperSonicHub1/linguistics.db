@@ -1,0 +1,6 @@
+Finish up query language.
+Add support for phonemeizer.
+
+Possible resources:
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.json_normalize.html

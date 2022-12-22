@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}{% endblock %} | linguistics.db</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<style>
+		/* From Wiktionary */
+		.IPA,
+		.IPA *,
+		.IPAchar,
+		.IPAchar * {
+			font-style: normal;
+		}
+
+		.IPA,
+		.IPAchar {
+			font-family: Gentium, 'Gentium Plus', GentiumAlt, 'DejaVu Sans', 'Segoe UI', 'Lucida Grande', 'Charis SIL', 'Doulos SIL', 'TITUS Cyberbit Basic', 'Code2000', 'Lucida Sans Unicode', sans-serif;
+			font-size: 110%;
+			font-variant-ligatures: no-common-ligatures;
+		}
+
+		/* From me */
+		.IPA {
+			font-weight: normal;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<h1 class="IPA">{{ logo }}</h1>
+		<hr>
+		{% block main %}{% endblock %}
+	</main>
+</body>
+</html>

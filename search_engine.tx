@@ -1,0 +1,33 @@
+// Why must I do voodoo magic in order to get separators to work
+Model: parts*=Fixture[/\s*/];
+//Part: ;
+// TODO: Figure out how to support keywords and fixtures at the same time.
+// textx.exceptions.TextXSyntaxError: None:1:14: Expected ID or STRING or ArrayColumn or 'pronunciation' or 'spelling' or 'order' or EOF => 'nunciation*:like:" "'
+// Part: Keyword | Fixture;
+
+Keyword: ID | STRING;
+// TODO: Implement variables in Keyword, will likely need to implement my own string
+Variable: "<" id=ID ">";
+
+Fixture: ContainsFixture | LikeFixture | StartsWithFixture | EndsWithFixture | LengthFixture | OrderFixture;
+
+StringColumn: "pronunciation" | "spelling";
+ArrayColumn: "syllables";
+Column: StringColumn | ArrayColumn;
+
+// TODO: Consider combining ContainsFixture and LikeFixture
+ContainsFixture[noskipws]: column=ArrayColumn ":" "contains" ":" value=Keyword;
+LikeFixture[noskipws]: column=StringColumn ":" "like" ":" value=Keyword;
+StartsWithFixture[noskipws]: column=Column ":" "startswith" ":" value=Keyword;
+EndsWithFixture[noskipws]: column=Column ":" "endswith" ":" value=Keyword;
+
+// https://en.wikipedia.org/wiki/Interval_(mathematics)#Including_or_excluding_endpoints
+LeftBrace: "[" | "(";
+RightBrace: "]" | ")";
+Interval[skipws]: left_brace=LeftBrace left_value=INT "," right_value=INT right_brace=RightBrace;
+LengthFixtureValue: INT | Interval;
+LengthFixture[noskipws]:  column=Column ":" "length" ":" value=LengthFixtureValue;
+
+Direction: "asc" | "desc";
+OrderValue: "length";
+OrderFixture[noskipws]: "order" ":" direction=Direction ":" column=Column ":" value=OrderValue;
